@@ -6,6 +6,8 @@ $list = 2199943210,
 8767896789,
 9899965678
 
+# $list = Get-Content ./adventofcode/9.txt
+
 
 # Pad a list with 9s
 [System.Collections.ArrayList] $paddedList = , "9" * ($list[0].length + 2)
@@ -16,10 +18,8 @@ for ($i = 0; $i -lt $list.count; $i++) {
 $paddedList.add("9" * ($list[0].length + 2))
 
 
-for ($i = 0; $i -lt $list[0].length; $i++) {
+for ($i = 0; $i -lt $paddedList[0].length; $i++) {
   
 }
-
-$list = Get-Content ./adventofcode/9.txt
 
 $lineStr = 2199943210
