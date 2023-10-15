@@ -8,31 +8,34 @@ require 'Date'
 
 # Meetup Class determines the dates of meetings
 class Meetup
+  # constructor
   def initialize(month, year)
     @month = month
     @year = year
   end
 
+  # get meeting date
   def day(day_of_week, descriptor)
+    # Get first occurance of x day of the week in @month @year
     first_occurance = get_first_occurance(day_of_week)
 
     # handle descriptors
     case descriptor
+    # Simple handling of first to fourth
     when :first then first_occurance
     when :second then first_occurance + 7
     when :third then first_occurance + 14
     when :fourth then first_occurance + 21
+
     when :last
       # Aim high and work backwards until the months are the same
       if (first_occurance + 28).mon == first_occurance.mon
         first_occurance + 28
-      elsif (first_occurance + 21).mon == first_occurance.mon
-        first_occurance + 21
       else
-        first_occurance + 14
+        first_occurance + 21
       end
     when :teenth
-      # Test the sencond and third occurance of the day
+      # Test the sencond and third occurance of xday
       (1..2).each do |counter|
         loop_day_of_week = first_occurance + (counter * 7)
         return first_occurance + (counter * 7) if loop_day_of_week.day >= 13
