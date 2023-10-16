@@ -4,7 +4,7 @@
 # To get started with TDD, see the `README.md` file in your
 # `ruby/meetup` directory.
 
-require 'Date'
+require 'date'
 
 # Meetup Class determines the dates of meetings
 class Meetup
@@ -16,56 +16,44 @@ class Meetup
 
   # get meeting date
   def day(day_of_week, descriptor)
-    # Get first occurance of x day of the week in @month @year
-    first_occurance = get_first_occurance(day_of_week)
+    # Get all occurances of xday of the week in @month @year
+    all_occurances = get_all_occurances(day_of_week)
 
-    # handle descriptors
-    case descriptor
-    # Simple handling of first to fourth
-    when :first then first_occurance
-    when :second then first_occurance + 7
-    when :third then first_occurance + 14
-    when :fourth then first_occurance + 21
-
-    when :last
-      # Aim high and work backwards until the months are the same
-      if (first_occurance + 28).mon == first_occurance.mon
-        first_occurance + 28
-      else
-        first_occurance + 21
-      end
-    when :teenth
-      # Test the sencond and third occurance of xday
-      (1..2).each do |counter|
-        loop_day_of_week = first_occurance + (counter * 7)
-        return first_occurance + (counter * 7) if loop_day_of_week.day >= 13
+    # Return the 2nd or 3rd week
+    if descriptor == :teenth
+      all_occurances[1..2].each do |test_day|
+        return test_day if test_day.day >= 13
       end
     end
+
+    # Everything else
+    index = { first: 0, second: 1, third: 2, fourth: 3, last: -1 }
+    all_occurances[index[descriptor]]
   end
 
   private
 
   def get_first_occurance(day_of_week)
-    # Day of week to number
-    day_number = nil
-    case day_of_week
-    when :monday then day_number = 1
-    when :tuesday then day_number = 2
-    when :wednesday then day_number = 3
-    when :thursday then day_number = 4
-    when :friday then day_number = 5
-    when :saturday then day_number = 6
-    when :sunday then day_number = 7
-    end
-
     # Get the first of the month
     first_of_month = Date.new(@year, @month, 1)
 
-    # Find first occurance of day_of_week
+    # Find first occurance of day_of_week. Try from the the 1st to the 7th
     first_occurance = nil
     7.times do |counter|
-      first_occurance = first_of_month + counter if (first_of_month + counter).cwday == day_number
+      first_occurance = first_of_month + counter if (first_of_month + counter).send("#{day_of_week}?")
     end
     first_occurance
+  end
+
+  def get_all_occurances(day_of_week)
+    first_occurance = get_first_occurance(day_of_week)
+    all_occurances = []
+    5.times do |week_num|
+      # Verify that it hasn't rolled into the next month
+      if (first_occurance + (7 * week_num)).mon == first_occurance.mon
+        all_occurances << (first_occurance + (7 * week_num))
+      end
+    end
+    all_occurances
   end
 end
