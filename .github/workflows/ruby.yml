@@ -1,7 +1,7 @@
 name: Ruby tests
 on: [push, pull_request]
 jobs:
-  runs-on: self-hosted
+  # runs-on: self-hosted
   test:
     runs-on: ubuntu-latest
     steps:
