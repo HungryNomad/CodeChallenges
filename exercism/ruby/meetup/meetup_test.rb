@@ -2,6 +2,8 @@ require 'minitest/autorun'
 require_relative 'meetup'
 
 class MeetupTest < Minitest::Test
+  # Why does it skip all of the tests? No problem, just override it 
+  def skip ; end
   def test_when_teenth_monday_is_the_13th_the_first_day_of_the_teenth_week
     # skip
     meetup = Meetup.new(5, 2013).day(:monday, :teenth)
