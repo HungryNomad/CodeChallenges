@@ -1,17 +1,9 @@
 class LogLineParser
+  attr_accessor :message, :log_level, :reformat
+
   def initialize(line)
-    @line = line
-  end
-
-  def message
-    raise 'Please implement the LogLineParser#message method'
-  end
-
-  def log_level
-    raise 'Please implement the LogLineParser#log_level method'
-  end
-
-  def reformat
-    raise 'Please implement the LogLineParser#reformat method'
+    @log_level = line.split(':')[0].gsub(/[\[\]]/, '').downcase
+    @message = line.split(':')[1].strip
+    @reformat = "#{@message} (#{log_level})"
   end
 end
