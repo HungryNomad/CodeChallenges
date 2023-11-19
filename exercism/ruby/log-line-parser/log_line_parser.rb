@@ -12,8 +12,6 @@ class LogLineParser
   end
 
   def reformat
-    @message || message
-    @log_level || log_level
-    @reformat ||= "#{@message} (#{log_level})"
+    @reformat ||= "#{message} (#{log_level})"
   end
 end
