@@ -2,6 +2,8 @@ require 'minitest/autorun'
 require_relative 'tournament'
 
 class TournamentTest < Minitest::Test
+  def skip; end
+
   def test_just_the_header_if_no_input
     # skip
     input = <<~INPUT
